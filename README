@@ -1,0 +1,39 @@
+Organizare
+
+producer:
+acesta se inregistreaza primind un id, urmand ca ulterior 
+sa treaca prin produsele lui, pe tot timpul rularii programului, pe care incearca sa le publice.
+daca nu reuseste acesta asteapta republish_wait_time si reincearca
+altfel, acesta asteapta product_wait_time si trece la urmatorul produs
+
+consumer:
+fiecare consumator poate sa adauge sau sa scoata produse din cart ul sau
+daca nu se reuseste adaugarea unui produs in cart, se asteapta retry_wait_time
+si se incearca din nou. un produs adaugat in cartul consumatorului
+presupune ca acesta este indisponibil pentru alti consumatori.
+daca consumatorul doreste sa isi dea remove la un produs din propriul cart
+produsul redevenine disponibil pentru alti consumatori
+la final, consumatorul va plasa comanda si va sterge definitiv produsele din clasa marketplace.
+
+marketplace:
+in marketplace am implementat metodele folosite de consumator respectiv producator
+de specificat ca idurile carturilor si producatorilor incep de la 1 si sunt incrementate
+pentru fiecare producator respectiv cart.
+pentru sincronizare am folosit 4 lockuri
+pentru new cart: nu pot avea 2 consumatori care sa primeasca cate un cart in acelasi timp
+pentru add_to_cart: pentru a ma asigura ca nu iau 2 consumatori acelasi produs in acelasi timp
+pentru remove_from_cart: motiv similar
+pentru print: nu vreau ca mai multe threaduri sa scrie in acelasi timp.
+
+Implementare
+
+tema este implementata complet, toate testele trec.
+ca functionalitati extra, am tratat cazul cand un produs pe care incerc sa il
+sterg din cos nu exista deja in cos.
+dificultatile pe care le-am intampinat au fost mai mult legate de limbaj decat
+de problemele de sincronizare. a fost o tema care m a ajutat sa ma obisnuiesc cu pythonul
+
+resurse:
+primele laburi + ce referinte mai erau prin enuntul temei + clasicul stack overflow ocazional
+
+
